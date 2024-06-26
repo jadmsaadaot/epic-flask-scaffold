@@ -89,15 +89,6 @@ def create_app(run_mode=os.getenv('FLASK_ENV', 'development')):
 def build_cache(app):
     """Build cache."""
     cache.init_app(app)
-    with app.app_context():
-        cache.clear()
-        try:
-            from api.services.tenant_service import TenantService  # pylint: disable=import-outside-toplevel
-            TenantService.build_all_tenant_cache()
-        except Exception as e:  # NOQA # pylint:disable=broad-except
-            current_app.logger.error('Error on caching ')
-            current_app.logger.error(e)
-
 
 def setup_jwt_manager(app_context, jwt_manager):
     """Use flask app to configure the JWTManager to work for a particular Realm."""
