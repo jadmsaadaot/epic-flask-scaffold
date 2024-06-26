@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ Test-Suite to ensure that the CORS decorator is working as expected.
 """
 import pytest
 
-from met_api.utils.util import cors_preflight
+from api.utils.util import cors_preflight
 
 
 TEST_CORS_METHODS_DATA = [

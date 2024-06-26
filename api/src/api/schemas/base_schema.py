@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 from marshmallow import fields, post_dump
 
-from met_api.models import ma
+from api.models import ma
 
 
 class BaseSchema(ma.ModelSchema):  # pylint: disable=too-many-ancestors

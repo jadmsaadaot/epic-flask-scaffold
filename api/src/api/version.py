@@ -1,4 +1,4 @@
-# Copyright © 2021 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This exports all of the models and schemas used by the application."""
+"""Version of this service in PEP440.
 
-from .db import db, ma, migrate
+[N!]N(.N)*[{a|b|rc}N][.postN][.devN]
+Epoch segment: N!
+Release segment: N(.N)*
+Pre-release segment: {a|b|rc}N
+Post-release segment: .postN
+Development release segment: .devN
+"""
+
+__version__ = '0.1.0a0.dev'  # pylint: disable=invalid-name

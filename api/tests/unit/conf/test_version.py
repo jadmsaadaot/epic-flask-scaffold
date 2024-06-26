@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 Test-Suite to ensure that the version utilities are working as expected.
 """
-from met_api.utils import run_version
-from met_api.version import __version__
+from api.utils import run_version
+from api.version import __version__
 
 
 def test_get_version():

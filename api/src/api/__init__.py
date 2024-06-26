@@ -9,13 +9,11 @@ import secure
 from flask import Flask, current_app, g, request
 from flask_cors import CORS
 
-from met_api.auth import jwt
-from met_api.config import get_named_config
-from met_api.models import db, ma, migrate
-from met_api.models.tenant import Tenant as TenantModel
-from met_api.utils import constants
-from met_api.utils.cache import cache
-from met_api.utils.util import allowedorigins
+from api.auth import jwt
+from api.config import get_named_config
+from api.models import db, ma, migrate
+from api.utils.cache import cache
+from api.utils.util import allowedorigins
 
 # Security Response headers
 csp = (
@@ -43,7 +41,7 @@ secure_headers = secure.Secure(
 
 def create_app(run_mode=os.getenv('FLASK_ENV', 'development')):
     """Create flask app."""
-    from met_api.resources import API_BLUEPRINT  # pylint: disable=import-outside-toplevel
+    from api.resources import API_BLUEPRINT  # pylint: disable=import-outside-toplevel
 
     # Flask app initialize
     app = Flask(__name__)
@@ -75,30 +73,6 @@ def create_app(run_mode=os.getenv('FLASK_ENV', 'development')):
 
     build_cache(app)
 
-    @app.before_request
-    def set_tenant_id():
-        """Set Tenant ID Globally."""
-        tenant_short_name = request.headers.get(constants.TENANT_ID_HEADER, None)
-        if not tenant_short_name:
-            # Remove tenant_id and tenant_name attributes from g
-            if hasattr(g, 'tenant_id'):
-                del g.tenant_id
-
-            if hasattr(g, 'tenant_name'):
-                del g.tenant_name
-            return
-        key = tenant_short_name.upper()
-        tenant = cache.get(f'tenant_{key}')
-        cache_miss = not tenant
-        if cache_miss:
-            tenant: TenantModel = TenantModel.find_by_short_name(tenant_short_name)
-            if not tenant:
-                return
-            key = tenant.short_name.upper()
-            cache.set(f'tenant_{key}', tenant)
-        g.tenant_id = tenant.id
-        g.tenant_name = key
-
     @app.after_request
     def set_secure_headers(response):
         """Set CORS headers for security."""
@@ -118,7 +92,7 @@ def build_cache(app):
     with app.app_context():
         cache.clear()
         try:
-            from met_api.services.tenant_service import TenantService  # pylint: disable=import-outside-toplevel
+            from api.services.tenant_service import TenantService  # pylint: disable=import-outside-toplevel
             TenantService.build_all_tenant_cache()
         except Exception as e:  # NOQA # pylint:disable=broad-except
             current_app.logger.error('Error on caching ')

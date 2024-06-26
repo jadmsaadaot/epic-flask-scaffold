@@ -1,4 +1,4 @@
-# Copyright © 2021 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -56,6 +56,35 @@ class _Config():  # pylint: disable=too-few-public-methods
 
     TESTING = False
     DEBUG = False
+
+    # POSTGRESQL
+    DB_USER = os.getenv('DATABASE_USERNAME', '')
+    DB_PASSWORD = os.getenv('DATABASE_PASSWORD', '')
+    DB_NAME = os.getenv('DATABASE_NAME', '')
+    DB_HOST = os.getenv('DATABASE_HOST', '')
+    DB_PORT = os.getenv('DATABASE_PORT', '5432')
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{int(DB_PORT)}/{DB_NAME}'
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # JWT_OIDC Settings
+    JWT_OIDC_WELL_KNOWN_CONFIG = os.getenv('JWT_OIDC_WELL_KNOWN_CONFIG')
+    JWT_OIDC_ALGORITHMS = os.getenv('JWT_OIDC_ALGORITHMS', 'RS256')
+    JWT_OIDC_JWKS_URI = os.getenv('JWT_OIDC_JWKS_URI')
+    JWT_OIDC_ISSUER = os.getenv('JWT_OIDC_ISSUER')
+    JWT_OIDC_AUDIENCE = os.getenv('JWT_OIDC_AUDIENCE', 'account')
+    JWT_OIDC_CACHING_ENABLED = os.getenv('JWT_OIDC_CACHING_ENABLED', 'True')
+    JWT_OIDC_JWKS_CACHE_TIMEOUT = 300
+
+    # Service account details
+    KEYCLOAK_BASE_URL = os.getenv('KEYCLOAK_BASE_URL')
+    KEYCLOAK_REALMNAME = os.getenv('KEYCLOAK_REALMNAME', 'met')
+    KEYCLOAK_SERVICE_ACCOUNT_ID = os.getenv('MET_ADMIN_CLIENT_ID')
+    KEYCLOAK_SERVICE_ACCOUNT_SECRET = os.getenv('MET_ADMIN_CLIENT_SECRET')
+    # TODO separate out clients for APIs and user management.
+    # TODO API client wont need user management roles in keycloak.
+    KEYCLOAK_ADMIN_USERNAME = os.getenv('MET_ADMIN_CLIENT_ID')
+    KEYCLOAK_ADMIN_SECRET = os.getenv('MET_ADMIN_CLIENT_SECRET')
 
 
 class DevConfig(_Config):  # pylint: disable=too-few-public-methods

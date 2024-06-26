@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ import pytest
 from flask_migrate import Migrate, upgrade
 from sqlalchemy import event, text
 
-from met_api import create_app, setup_jwt_manager
-from met_api.auth import jwt as _jwt
-from met_api.models import db as _db
+from api import create_app, setup_jwt_manager
+from api.auth import jwt as _jwt
+from api.models import db as _db
 
 
 @pytest.fixture(scope='session')

@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ Test Utility for creating model factory.
 from faker import Faker
 from flask import g
 
-from met_api.config import get_named_config
+from api.config import get_named_config
 
 CONFIG = get_named_config('testing')
 fake = Faker()

@@ -1,4 +1,4 @@
-# Copyright © 2019 Province of British Columbia
+# Copyright © 2024 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from met_api.utils.util import camelback2snake, escape_wam_friendly_url, snake2camelback
+from api.utils.util import camelback2snake, escape_wam_friendly_url, snake2camelback
 
 
 TEST_CAMEL_DATA = {'loginSource': 'PASSCODE', 'userName': 'test name', 'realmAccess': {
