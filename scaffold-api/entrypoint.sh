@@ -1,4 +1,2 @@
 #!/bin/bash
-
-
-python manage.py db upgrade && python wsgi.py
+flask db upgrade && python wsgi.py
