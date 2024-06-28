@@ -35,9 +35,9 @@ API_BLUEPRINT = Blueprint('API', __name__, url_prefix=URL_PREFIX)
 
 API = Api(
     API_BLUEPRINT,
-    title='MET API',
+    title='SCAFFOLD API',
     version='1.0',
-    description='The Core API for MET'
+    description='The Core API for SCAFFOLD'
 )
 
 # HANDLER = ExceptionHandler(API)

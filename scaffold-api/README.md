@@ -1,4 +1,4 @@
-# MET-API
+# Scaffold-API
 
 Python flask API application for The Modern Engagement Tool project.
 
@@ -10,9 +10,9 @@ Python flask API application for The Modern Engagement Tool project.
     - [Docker](https://www.docker.com/)
     - [Docker-Compose](https://docs.docker.com/compose/install/)
 * Install Dependencies
-    - Run `make setup` in the root of the project (met-api)
+    - Run `make setup` in the root of the project (scaffold-api)
 * Start the databases
-    - Run `docker-compose up` in the root of the project (met-api)
+    - Run `docker-compose up` in the root of the project (scaffold-api)
 
 ## Environment Variables
 
@@ -47,4 +47,4 @@ Open [http://localhost:5000/api](http://localhost:5000/api) to view it in the br
 
 Ensure the latest version of [VS Code](https://code.visualstudio.com) is installed.
 
-The [`launch.json`](.vscode/launch.json) is already configured with a launch task (MET-API Launch) that allows you to launch chrome in a debugging capacity and debug through code within the editor. 
+The [`launch.json`](.vscode/launch.json) is already configured with a launch task (SCAFFOLD-API Launch) that allows you to launch chrome in a debugging capacity and debug through code within the editor. 

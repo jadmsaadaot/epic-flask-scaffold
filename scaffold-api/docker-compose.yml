@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  api-db:
+  saffold-api-db:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data2
@@ -13,7 +13,7 @@ services:
       - 54332:5432/tcp
     restart: unless-stopped
 
-  api-db-test:
+  scaffold-api-db-test:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data3
