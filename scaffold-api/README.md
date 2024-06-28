@@ -1,6 +1,6 @@
-# Scaffold-API
+# SCAFFOLD-API
 
-Python flask API application for The Modern Engagement Tool project.
+A scaffold Python flask API application to be used as a template.
 
 ## Getting Started
 
