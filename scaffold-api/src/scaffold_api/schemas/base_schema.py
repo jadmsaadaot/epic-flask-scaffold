@@ -18,7 +18,7 @@ from marshmallow import fields, post_dump
 from scaffold_api.models import ma
 
 
-class BaseSchema(ma.SQLAlchemyAutoSchema):  # pylint: disable=too-many-ancestors
+class BaseSchema(ma.ModelSchema):  # pylint: disable=too-many-ancestors
     """Base Schema."""
 
     def __init__(self, *args, **kwargs):
