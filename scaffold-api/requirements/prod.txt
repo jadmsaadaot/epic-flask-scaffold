@@ -6,11 +6,11 @@ Flask-Moment
 Flask-SQLAlchemy
 SQLAlchemy-Continuum
 flask-restx
-flask-marshmallow
+flask-marshmallow==0.11.0
 flask-jwt-oidc
 python-dotenv
 psycopg2-binary
-marshmallow-sqlalchemy
+marshmallow-sqlalchemy==0.25.0
 marshmallow_enum
 jsonschema
 requests
