@@ -1,2 +1,2 @@
 # epic-flask-scaffold
-This is a scaffold for a flask rest api
+This is a scaffold for a React Flask app
