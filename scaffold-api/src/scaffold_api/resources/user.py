@@ -36,10 +36,5 @@ class User(Resource):
     @cross_origin(origins=allowedorigins())
     def get(user_id):
         """Fetch a user by id."""
-        args = request.args
-        user = UserService.get_user_by_id(
-            user_id,
-            include_groups=args.get('include_groups', default=False, type=lambda v: v.lower() == 'true'),
-            include_inactive=True,
-        )
+        user = UserService.get_user_by_id(user_id)
         return user, HTTPStatus.OK
