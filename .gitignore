@@ -139,3 +139,5 @@ scaffold-api/.DS_Store
 
 # VSCode Chrome extension user data
 .vscode/chrome
+
+.idea
