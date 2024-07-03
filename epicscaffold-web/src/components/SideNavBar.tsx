@@ -1,19 +1,19 @@
 import { Box, List, ListItem, ListItemButton } from "@mui/material";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 
 export default function SideNavBar() {
   return (
     <div>
-      <Box sx={{ overflow: "auto" }} width={240} height={'calc(100vh - 88px)'}>
+      <Box
+        sx={{ overflow: "auto", borderRight: "1px solid #0000001A" }}
+        width={240}
+        height={"calc(100vh - 88px)"}
+      >
         <List>
           {[
             {
               routeName: "Root",
               path: "/",
-            },
-            {
-              routeName: "Home",
-              path: "/Home",
             },
             {
               routeName: "About",
@@ -24,7 +24,7 @@ export default function SideNavBar() {
               path: "/NewPage",
             },
           ].map((route) => (
-            <ListItem key={route.routeName} disablePadding>
+            <ListItem key={route.routeName}>
               <ListItemButton>
                 <Link to={route.path} className="[&.active]:font-bold">
                   {route.routeName}
