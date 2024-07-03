@@ -17,11 +17,11 @@ export default function SideNavBar() {
             },
             {
               routeName: "About",
-              path: "/About",
+              path: "/about",
             },
             {
-              routeName: "NewPage",
-              path: "/NewPage",
+              routeName: "ListPage",
+              path: "/listpage",
             },
           ].map((route) => (
             <ListItem key={route.routeName}>

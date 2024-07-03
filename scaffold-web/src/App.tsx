@@ -9,7 +9,7 @@ function App() {
       <EAOAppBar />
       <Box display={"flex"}>
         <SideNavBar />
-        <Box display={"flex"} flexDirection={"column"} padding={"1rem"}>
+        <Box display={"flex"} flexDirection={"column"} flex={1} padding={"1rem"}>
           <Outlet />
         </Box>
       </Box>

@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PageNotFound from "@/pages/PageNotFound";
 import About from "@/pages/About";
 import App from "@/App";
+import ListPage from "@/pages/ListPage";
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
         // action: loginAction,
         // loader: loginLoader,
         Component: About,
+      },
+      {
+        path: "listpage",
+        Component: ListPage,
       },
       // {
       //   path: "protected",
