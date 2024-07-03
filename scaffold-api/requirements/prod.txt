@@ -1,16 +1,16 @@
 gunicorn
-Flask
-Flask-Migrate==4.0.7
+Flask>=3.0.0
+Flask-Migrate
 Flask-Mail
 Flask-Moment
 Flask-SQLAlchemy
 SQLAlchemy-Continuum
 flask-restx
-flask-marshmallow==1.2.1
+flask-marshmallow
 flask-jwt-oidc
 python-dotenv
 psycopg2-binary
-marshmallow-sqlalchemy==1.0.0
+marshmallow-sqlalchemy
 marshmallow_enum
 jsonschema
 requests
@@ -18,17 +18,18 @@ itsdangerous
 # sentry-sdk[flask]
 # bcrypt
 # jaeger-client
-werkzeug==3.0.3
+werkzeug
 # minio
-# pyhumps
 sqlalchemy-utils
 Flask-Caching
 # asyncio-nats-client
 # asyncio-nats-streaming
-sqlalchemy==2.0.31
+sqlalchemy
 secure
 python-dotenv
 # aws-requests-auth
 requests
 # anytree
 # geopandas
+flask_cors
+pyhumps
