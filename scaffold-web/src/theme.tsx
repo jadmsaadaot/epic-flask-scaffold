@@ -1,11 +1,5 @@
 import { createTheme } from "@mui/material";
 import '@bcgov/bc-sans/css/BC_Sans.css';
-// import BCSansRegular from '@/assets/fonts/BCSans-Regular.woff';
-// import BCSansLight from '@/assets/fonts/BCSans-Light.woff';
-// import BCSansBold from '@/assets/fonts/BCSans-Bold.woff';
-// import BCSansRegular2 from '@/assets/fonts/BCSans-Regular.woff2';
-// import BCSansLight2 from '@/assets/fonts/BCSans-Light.woff2';
-// import BCSansBold2 from '@/assets/fonts/BCSans-Bold.woff2';
 
 const theme = createTheme({
   palette: {

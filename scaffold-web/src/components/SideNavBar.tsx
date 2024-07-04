@@ -20,8 +20,8 @@ export default function SideNavBar() {
               path: "/about",
             },
             {
-              routeName: "ListPage",
-              path: "/listpage",
+              routeName: "Plans list",
+              path: "/planslist",
             },
           ].map((route) => (
             <ListItem key={route.routeName}>

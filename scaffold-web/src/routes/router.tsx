@@ -3,8 +3,9 @@ import { createBrowserRouter } from "react-router-dom";
 import PageNotFound from "@/pages/PageNotFound";
 import About from "@/pages/About";
 import App from "@/App";
-import ListPage from "@/pages/ListPage";
-
+import PlanListPage from "@/pages/Plans/PlanListPage";
+import PlanPage from "@/pages/Plans/PlanPage";
+import Plans from "@/pages/Plans/Plans";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +29,18 @@ const router = createBrowserRouter([
         Component: About,
       },
       {
-        path: "listpage",
-        Component: ListPage,
+        path: "planslist",
+        Component: Plans,
+        children: [
+          {
+            index: true,
+            Component: PlanListPage,
+          },
+          {
+            path: ":planIdParam",
+            Component: PlanPage,
+          },
+        ],
       },
       // {
       //   path: "protected",
