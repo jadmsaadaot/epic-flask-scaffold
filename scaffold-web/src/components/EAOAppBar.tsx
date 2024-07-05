@@ -1,6 +1,7 @@
 import { AppBar, Grid, Typography } from "@mui/material";
 import EAO_Logo from "@/assets/images/EAO_Logo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { AppConfig } from "@/config";
 
 export default function EAOAppBar() {
   return (
@@ -21,7 +22,7 @@ export default function EAOAppBar() {
               paddingLeft={"0.5rem"}
               fontWeight={"bold"}
             >
-              EPIC.scaffold
+              {AppConfig.appTitle}
             </Typography>
           </Grid>
           <Grid display="flex" justifyContent="center" alignItems="center">
