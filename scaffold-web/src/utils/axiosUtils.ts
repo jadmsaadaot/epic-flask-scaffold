@@ -1,6 +1,7 @@
+import { AppConfig } from '@/config'
 import axios from 'axios'
 
-const client = axios.create({ baseURL: 'http://localhost:5175' })
+const client = axios.create({ baseURL: AppConfig.apiUrl })
 
 export const request = ({ ...options }) => {
   // client.defaults.headers.common.Authorization = `Bearer token`
