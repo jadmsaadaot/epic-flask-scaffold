@@ -11,5 +11,5 @@ repository:
   ref: develop
   url: https://github.com/bcgov/EPIC-FLOW.git
 context:
-  dir: /epictrack-web
+  dir: /scaffold-web
 
