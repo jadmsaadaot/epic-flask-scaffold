@@ -27,7 +27,7 @@ jobs:
   api-cd:
     runs-on: ubuntu-20.04
 
-    if: github.repository == 'bcgov/EPIC.track'
+    if: github.repository == 'bcgov/EPIC.scaffold'
     environment:
       name: "dev"
 
