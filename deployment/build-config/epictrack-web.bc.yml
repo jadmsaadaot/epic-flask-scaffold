@@ -3,8 +3,8 @@ kind: Template
 metadata:
   name: web-build-template
   annotations:
-    description: "Build Configuration Template for the MET WEB Project"
-    tags: "met, web, reactjs, typescript, jest"
+    description: "Build Configuration Template for the SCAFFOLD WEB Project"
+    tags: "scaffold, web, reactjs, typescript, jest"
 objects:
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
