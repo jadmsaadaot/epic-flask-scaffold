@@ -33,3 +33,4 @@ requests
 # geopandas
 flask_cors
 pyhumps
+importlib-resources
