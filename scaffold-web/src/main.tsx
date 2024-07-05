@@ -1,22 +1,21 @@
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
-import { ThemeProvider } from '@mui/material'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RouterProvider } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import { ThemeProvider } from "@mui/material";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { theme } from "@/styles/theme";
+import "@/styles/App.scss";
 
-import theme from '@/theme'
-import '@/index.scss'
+import router from "@/routes/router";
 
-import router from '@/routes/router'
-
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 // Render the app
-const rootElement = document.getElementById('root')!
+const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement)
+  const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
@@ -25,6 +24,6 @@ if (!rootElement.innerHTML) {
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </StrictMode>,
-  )
+    </StrictMode>
+  );
 }
