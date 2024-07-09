@@ -69,7 +69,7 @@ class User(Resource):
     @cross_origin(origins=allowedorigins())
     @auth.require
     def patch(user_id):
-        """Fetch a user by id."""
+        """Update a user by id."""
         user_data = request.get_json()
         updated_user = UserService.update_user(user_id, user_data)
         return updated_user, HTTPStatus.OK
@@ -78,6 +78,6 @@ class User(Resource):
     @cross_origin(origins=allowedorigins())
     @auth.require
     def delete(user_id):
-        """Fetch a user by id."""
+        """Delete a user by id."""
         deleted_user_id = UserService.delete_user(user_id)
         return deleted_user_id, HTTPStatus.OK
