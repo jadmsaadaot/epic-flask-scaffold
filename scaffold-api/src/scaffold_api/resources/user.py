@@ -15,6 +15,8 @@
 
 from http import HTTPStatus
 
+from flask import jsonify, request
+
 from scaffold_api.auth import auth
 from scaffold_api.services.user_service import UserService
 from flask_cors import cross_origin
@@ -27,10 +29,33 @@ API = Namespace('user', description='Endpoints for User Management')
 """
 
 
-@cors_preflight('GET')
-@API.route('/<user_id>')
+@cors_preflight('GET, OPTIONS, POST')
+@API.route('', methods=["POST", "GET", "OPTIONS"])
 class User(Resource):
-    """User controller class."""
+    """Resource for managing users."""
+
+    @staticmethod
+    @cross_origin(origins=allowedorigins())
+    @auth.require
+    def get():
+        """Fetch all users."""
+        users = UserService.get_all_users()
+        return jsonify(users), HTTPStatus.OK
+
+    @staticmethod
+    @cross_origin(origins=allowedorigins())
+    @auth.require
+    def post():
+        """Create a user."""
+        user_data = request.get_json()
+        created_user = UserService.create_user(user_data)
+        return created_user, HTTPStatus.CREATED
+
+
+@cors_preflight('GET, OPTIONS, PATCH')
+@API.route('/<user_id>', methods=["PATCH", "GET", "OPTIONS"])
+class User(Resource):
+    """Resource for managing a single user"""
 
     @staticmethod
     @cross_origin(origins=allowedorigins())
@@ -39,3 +64,12 @@ class User(Resource):
         """Fetch a user by id."""
         user = UserService.get_user_by_id(user_id)
         return user, HTTPStatus.OK
+
+    @staticmethod
+    @cross_origin(origins=allowedorigins())
+    @auth.require
+    def patch(user_id):
+        """Fetch a user by id."""
+        user_data = request.get_json()
+        updated_user = UserService.update_user(user_id, user_data)
+        return updated_user, HTTPStatus.OK

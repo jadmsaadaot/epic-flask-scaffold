@@ -13,3 +13,26 @@ class UserService:
         db_user = UserModel.find_by_id(_user_id)
         user = user_schema.dump(db_user)
         return user
+
+    @classmethod
+    def get_all_users(cls):
+        """Get all users."""
+        users = UserModel.get_all()
+
+        user_schema = UserSchema(many=True)
+        user = user_schema.dump(users)
+        return user
+
+    @classmethod
+    def create_user(cls, user_data):
+        """Create user."""
+        created_user = UserModel.create_user(user_data)
+        user_schema = UserSchema()
+        return user_schema.dump(created_user)
+
+    @classmethod
+    def update_user(cls, user_id, user_data):
+        """Update user."""
+        updated_user = UserModel.update_user(user_id, user_data)
+        user_schema = UserSchema()
+        return user_schema.dump(updated_user)
