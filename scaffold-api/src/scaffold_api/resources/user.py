@@ -31,7 +31,7 @@ API = Namespace('user', description='Endpoints for User Management')
 
 @cors_preflight('GET, OPTIONS, POST')
 @API.route('', methods=["POST", "GET", "OPTIONS"])
-class User(Resource):
+class Users(Resource):
     """Resource for managing users."""
 
     @staticmethod
