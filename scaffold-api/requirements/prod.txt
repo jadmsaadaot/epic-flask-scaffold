@@ -15,22 +15,13 @@ marshmallow_enum
 jsonschema
 requests
 itsdangerous
-# sentry-sdk[flask]
-# bcrypt
-# jaeger-client
 werkzeug
-# minio
 sqlalchemy-utils
 Flask-Caching
-# asyncio-nats-client
-# asyncio-nats-streaming
 sqlalchemy
 secure
 python-dotenv
-# aws-requests-auth
 requests
-# anytree
-# geopandas
 flask_cors
 pyhumps
 importlib-resources
