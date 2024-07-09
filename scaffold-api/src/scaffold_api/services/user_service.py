@@ -36,3 +36,13 @@ class UserService:
         updated_user = UserModel.update_user(user_id, user_data)
         user_schema = UserSchema()
         return user_schema.dump(updated_user)
+
+    @classmethod
+    def delete_user(cls, user_id):
+        """Update user."""
+        user = UserModel.find_by_id(user_id)
+        if not user:
+            return None
+
+        user.delete()
+        return user_id
