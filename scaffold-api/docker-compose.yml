@@ -1,13 +1,14 @@
 version: "3.9"
 
 services:
-  saffold-api-db:
+  scaffold-api-db:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data2
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD:admin
+      - POSTGRES_USER=scaffold
+      - POSTGRES_PASSWORD=scaffold
+      - POSTGRES_DB=scaffold
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 54332:5432/tcp
@@ -18,8 +19,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data3
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD:admin
+      - POSTGRES_USER=scaffold
+      - POSTGRES_PASSWORD=scaffold
+      - POSTGRES_DB=scaffold
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 54333:5432/tcp

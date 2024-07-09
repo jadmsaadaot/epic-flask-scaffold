@@ -33,7 +33,7 @@ class User(Resource):
     """User controller class."""
 
     @staticmethod
-    @cross_origin(origins=allowedorigins())
+    # @cross_origin(origins=allowedorigins())
     def get(user_id):
         """Fetch a user by id."""
         user = UserService.get_user_by_id(user_id)
