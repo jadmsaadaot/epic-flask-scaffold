@@ -15,8 +15,8 @@
 
 from http import HTTPStatus
 
+from scaffold_api.auth import auth
 from scaffold_api.services.user_service import UserService
-from flask import request
 from flask_cors import cross_origin
 from flask_restx import Namespace, Resource
 
@@ -33,7 +33,8 @@ class User(Resource):
     """User controller class."""
 
     @staticmethod
-    # @cross_origin(origins=allowedorigins())
+    @cross_origin(origins=allowedorigins())
+    @auth.require
     def get(user_id):
         """Fetch a user by id."""
         user = UserService.get_user_by_id(user_id)
