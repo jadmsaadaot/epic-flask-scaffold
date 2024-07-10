@@ -52,7 +52,8 @@ def create_app(run_mode=os.getenv('FLASK_ENV', 'development')):
     CORS(app, origins=allowedorigins(), supports_credentials=True)
 
     # Register blueprints
-    app.register_blueprint(API_BLUEPRINT)
+    app.register_blueprint(API_BLUEPRINT)# Create the database (run once)
+
 
     # Setup jwt for keycloak
     if os.getenv('FLASK_ENV', 'production') != 'testing':
@@ -60,9 +61,11 @@ def create_app(run_mode=os.getenv('FLASK_ENV', 'development')):
 
     # Database connection initialize
     db.init_app(app)
-
-    # Database migrate initialize
+    
+    # # Database migrate initialize
     migrate.init_app(app, db)
+    with app.app_context():
+        db.create_all()
 
     # Marshmallow initialize
     ma.init_app(app)
