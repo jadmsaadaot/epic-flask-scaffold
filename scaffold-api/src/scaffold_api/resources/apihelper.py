@@ -17,12 +17,9 @@ to support swagger on http
 """
 from functools import wraps
 from flask import url_for
-from flask_cors import cross_origin
 from flask_restx import Api as BaseApi, fields
 from flask_restx.apidoc import apidoc
 from marshmallow import fields as ma_fields
-from scaffold_api.utils.util import allowedorigins
-from scaffold_api.auth import auth
 
 
 class Api(BaseApi):
@@ -35,12 +32,11 @@ class Api(BaseApi):
         return url_for(self.endpoint("specs"), _external=True, _scheme=scheme)
 
     @classmethod
-    def common_decorator(cls, api, endpoint_description):
+    def swagger_decorators(cls, api, endpoint_description):
         """Common decorators for the resources"""
 
         def decorator(func):
             @wraps(func)
-            @cross_origin(origins=allowedorigins())
             @api.doc(description=endpoint_description)
             @api.response(401, "Unauthorized")
             @api.response(500, "Internal Server Error")

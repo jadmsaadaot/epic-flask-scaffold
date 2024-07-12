@@ -41,9 +41,9 @@ class Users(Resource):
     """Resource for managing users."""
 
     @staticmethod
-    @auth.require
     @API.response(code=200, description="Success", model=[user_list_model])
-    @ApiHelper.common_decorator(API, endpoint_description="Fetch all users")
+    @ApiHelper.swagger_decorators(API, endpoint_description="Fetch all users")
+    # @auth.require
     def get():
         """Fetch all users."""
         users = UserService.get_all_users()
@@ -52,7 +52,7 @@ class Users(Resource):
 
     @staticmethod
     @auth.require
-    @ApiHelper.common_decorator(API, endpoint_description="Create a user")
+    @ApiHelper.swagger_decorators(API, endpoint_description="Create a user")
     @API.expect(user_request_model)
     @API.response(code=201, model=user_request_model, description="UserCreated")
     @API.response(400, "Bad Request")
@@ -71,7 +71,7 @@ class User(Resource):
 
     @staticmethod
     @auth.require
-    @ApiHelper.common_decorator(API, endpoint_description="Fetch a user by id")
+    @ApiHelper.swagger_decorators(API, endpoint_description="Fetch a user by id")
     @API.response(code=200, model=user_list_model, description="Success")
     @API.response(404, "Not Found")
     def get(user_id):
@@ -83,7 +83,7 @@ class User(Resource):
 
     @staticmethod
     @auth.require
-    @ApiHelper.common_decorator(API, endpoint_description="Update a user by id")
+    @ApiHelper.swagger_decorators(API, endpoint_description="Update a user by id")
     @API.expect(user_request_model)
     @API.response(code=200, model=user_list_model, description="Success")
     @API.response(400, "Bad Request")
@@ -98,7 +98,7 @@ class User(Resource):
 
     @staticmethod
     @auth.require
-    @ApiHelper.common_decorator(API, endpoint_description="Delete a user by id")
+    @ApiHelper.swagger_decorators(API, endpoint_description="Delete a user by id")
     @API.response(code=200, model=user_list_model, description="Deleted")
     @API.response(404, "Not Found")
     def delete(user_id):
