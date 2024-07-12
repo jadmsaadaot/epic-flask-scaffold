@@ -19,9 +19,9 @@ class UserService:
         """Get all users."""
         users = UserModel.get_all()
 
-        user_schema = UserSchema(many=True)
-        user = user_schema.dump(users)
-        return user
+        # user_schema = UserSchema(many=True)
+        # user = user_schema.dump(users)
+        return users
 
     @classmethod
     def create_user(cls, user_data):
