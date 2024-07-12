@@ -1,0 +1,127 @@
+import { useAddUser } from "@/hooks/useUsers";
+import { User } from "@/models/User";
+import { Save } from "@mui/icons-material";
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
+
+type AddUserModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+};
+
+export default function AddUserModal(modalProps: AddUserModalProps) {
+  const initFormData: Omit<User, "id"> = {
+    first_name: "",
+    last_name: "",
+    username: "",
+    email_address: "",
+    contact_number: "",
+  };
+  const [formData, setFormData] = useState<Omit<User, "id">>(initFormData);
+
+  const onSuccess = (data: unknown) => {
+    console.log(data);
+    setFormData(initFormData);
+    modalProps.onSubmit();
+  };
+
+  const onError = (err: unknown) => {
+    console.log(err);
+  };
+
+  const {
+    mutate: addUser,
+    isError,
+    error,
+    reset,
+  } = useAddUser(onSuccess, onError);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    addUser(formData);
+  };
+
+  const handleClose = () => {
+    reset();
+    setFormData(initFormData);
+    modalProps.onClose();
+  };
+
+  return (
+    <Dialog open={modalProps.isOpen} onClose={handleClose}>
+      <DialogTitle fontWeight={"bold"}>Add New User</DialogTitle>
+      <form onSubmit={handleSubmit}>
+        <DialogContent>
+          {isError && <Alert severity="error">Error: {error?.message}</Alert>}
+          <TextField
+            label="First Name"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Last Name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Email Address"
+            name="email_address"
+            value={formData.email_address}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Contact Number"
+            name="contact_number"
+            value={formData.contact_number}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions
+          sx={{ paddingX: "1.5rem", paddingBottom: "1.25rem", paddingTop: "0" }}
+        >
+          <Button variant={"text"} onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant={"contained"} type="submit" startIcon={<Save />}>
+            Save
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
+  );
+}

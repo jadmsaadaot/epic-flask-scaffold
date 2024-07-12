@@ -6,6 +6,7 @@ import App from "@/App";
 import PlanListPage from "@/pages/Plans/PlanListPage";
 import PlanPage from "@/pages/Plans/PlanPage";
 import Plans from "@/pages/Plans/Plans";
+import UserListPage from "@/pages/Users/Users";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         // action: loginAction,
         // loader: loginLoader,
         Component: About,
+      },
+      {
+        path: "users",
+        Component: UserListPage,
       },
       {
         path: "planslist",
