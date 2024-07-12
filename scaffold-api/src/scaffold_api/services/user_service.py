@@ -1,6 +1,5 @@
 """Service for user management."""
 from scaffold_api.models.user import User as UserModel
-from scaffold_api.schemas.user import UserSchema
 
 
 class UserService:
