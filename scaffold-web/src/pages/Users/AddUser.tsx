@@ -1,4 +1,4 @@
-import { useAddUser } from "@/hooks/useUsers";
+import { useAddUser, useUpdateUser } from "@/hooks/useUsers";
 import { User } from "@/models/User";
 import { Save } from "@mui/icons-material";
 import {
@@ -10,28 +10,51 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type AddUserModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  user?: User | null;
 };
 
-export default function AddUserModal(modalProps: AddUserModalProps) {
-  const initFormData: Omit<User, "id"> = {
-    first_name: "",
-    last_name: "",
-    username: "",
-    email_address: "",
-    contact_number: "",
-  };
+const initFormData: Omit<User, "id"> = {
+  first_name: "",
+  last_name: "",
+  username: "",
+  email_address: "",
+  contact_number: "",
+  description: ""
+};
+
+const AddUserModal: React.FC<AddUserModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  user,
+}) => {
   const [formData, setFormData] = useState<Omit<User, "id">>(initFormData);
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
+        username: user.username || "",
+        email_address: user.email_address || "",
+        contact_number: user.contact_number || "",
+        description: user.description || "",
+      });
+    } else {
+      setFormData(initFormData);
+    }
+  }, [user]);
 
   const onSuccess = (data: unknown) => {
     console.log(data);
     setFormData(initFormData);
-    modalProps.onSubmit();
+    onSubmit();
   };
 
   const onError = (err: unknown) => {
@@ -45,6 +68,8 @@ export default function AddUserModal(modalProps: AddUserModalProps) {
     reset,
   } = useAddUser(onSuccess, onError);
 
+  const { mutate: updateUser } = useUpdateUser(onSuccess, onError);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -55,17 +80,21 @@ export default function AddUserModal(modalProps: AddUserModalProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addUser(formData);
+    if (user) {
+      updateUser({ ...user, ...formData });
+    } else {
+      addUser(formData);
+    }
   };
 
   const handleClose = () => {
     reset();
     setFormData(initFormData);
-    modalProps.onClose();
+    onClose();
   };
 
   return (
-    <Dialog open={modalProps.isOpen} onClose={handleClose}>
+    <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle fontWeight={"bold"}>Add New User</DialogTitle>
       <form onSubmit={handleSubmit}>
         <DialogContent>
@@ -124,4 +153,6 @@ export default function AddUserModal(modalProps: AddUserModalProps) {
       </form>
     </Dialog>
   );
-}
+};
+
+export default AddUserModal;

@@ -3,15 +3,19 @@ import { OnErrorType, OnSuccessType, request } from "@/utils/axiosUtils";
 import { User } from "@/models/User";
 
 const fetchUsers = () => {
-  return request({ url: "/user" });
+  return request({ url: "/users" });
 };
 
 const fetchUserById = (id: number) => {
-  return request({ url: `/user/${id}` });
+  return request({ url: `/users/${id}` });
 };
 
 const addUser = (user: Omit<User, "id">) => {
-  return request({ url: "/user", method: "post" , data: user});
+  return request({ url: "/users", method: "post" , data: user});
+};
+
+const updateUser = (user: User) => {
+  return request({ url: `/users/${user.id}`, method: "patch" , data: user});
 };
 
 export const useUsersData = () => {
@@ -32,6 +36,14 @@ export const useUserById = (userId: number) => {
 export const useAddUser = (onSuccess: OnSuccessType, onError: OnErrorType) => {
   return useMutation({
     mutationFn: addUser,
+    onSuccess,
+    onError
+  })
+}
+
+export const useUpdateUser = (onSuccess: OnSuccessType, onError: OnErrorType) => {
+  return useMutation({
+    mutationFn: updateUser,
     onSuccess,
     onError
   })

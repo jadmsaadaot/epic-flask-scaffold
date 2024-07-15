@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
 import { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
 import { User } from "@/models/User";
@@ -20,19 +22,22 @@ import { useQueryClient } from "@tanstack/react-query";
 export default function UserListPage() {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const { isLoading, data, isError, error } = useUsersData();
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (user?: User) => {
+    setSelectedUser(user || null);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedUser(null);
   };
 
   const handleOnSubmit = () => {
-    queryClient.invalidateQueries({queryKey: ['users']});
+    queryClient.invalidateQueries({ queryKey: ["users"] });
     handleCloseModal();
   };
 
@@ -55,7 +60,7 @@ export default function UserListPage() {
       >
         <h2>Users List</h2>
         <Button
-          onClick={handleOpenModal}
+          onClick={() => handleOpenModal()}
           variant="outlined"
           color="primary"
           sx={{ width: "160px" }}
@@ -69,11 +74,10 @@ export default function UserListPage() {
             <TableRow>
               <TableCell sx={{ fontWeight: "bold" }}>First name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Last name</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Username</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }} align="right">
-                Username
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold" }} align="right">
-                Email
+                Actions
               </TableCell>
             </TableRow>
           </TableHead>
@@ -87,8 +91,20 @@ export default function UserListPage() {
                   <Link to={`${row.id}`}>{row.first_name}</Link>
                 </TableCell>
                 <TableCell>{row.last_name}</TableCell>
-                <TableCell align="right">{row.username}</TableCell>
-                <TableCell align="right">{row.email_address}</TableCell>
+                <TableCell>{row.username}</TableCell>
+                <TableCell>{row.email_address}</TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    aria-label="edit"
+                    color="primary"
+                    onClick={() => handleOpenModal(row)}
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton aria-label="delete" color="error">
+                    <Delete />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -98,6 +114,7 @@ export default function UserListPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleOnSubmit}
+        user={selectedUser}
       ></AddUserModal>
     </>
   );
