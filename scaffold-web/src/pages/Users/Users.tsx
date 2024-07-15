@@ -11,20 +11,38 @@ import {
   TableRow,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
 import { User } from "@/models/User";
-import { useUsersData } from "@/hooks/useUsers";
+import { useDeleteUser, useUsersData } from "@/hooks/useUsers";
 import { useState } from "react";
-import AddUserModal from "./AddUser";
+import UserModal from "./UserModal";
 import { useQueryClient } from "@tanstack/react-query";
+import ConfirmationDialog from "@/components/Popups/ConfirmationDialog";
+import CustomSnackbar, {
+  SnackBarMessageProps,
+} from "@/components/Popups/SnackBarMessage";
 
 export default function UserListPage() {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState<number | null>(null);
+  const [snackbarConfig, setSnackbarConfig] =
+    useState<SnackBarMessageProps | null>(null);
 
   const { isLoading, data, isError, error } = useUsersData();
+
+  const handleOnSubmit = () => {
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+    if(selectedUser) {
+      setSnackbarConfig({ message: "User updated successfully!" });
+    } else {
+      setSnackbarConfig({ message: "User added successfully!" });
+    }
+    handleCloseModal();
+  };
 
   const handleOpenModal = (user?: User) => {
     setSelectedUser(user || null);
@@ -36,10 +54,41 @@ export default function UserListPage() {
     setSelectedUser(null);
   };
 
-  const handleOnSubmit = () => {
-    queryClient.invalidateQueries({ queryKey: ["users"] });
-    handleCloseModal();
+  /** Delete user START */
+
+  const onDeleteSuccess = () => {
+    setSnackbarConfig({ message: "User deleted successfully!" });
+    queryClient.invalidateQueries({
+      queryKey: ["users"],
+    });
   };
+
+  const onDeleteError = (error: AxiosError) => {
+    console.error(error);
+    setSnackbarConfig({ message: "User deletion failed!", severity: "error" });
+  };
+
+  const { mutate: deleteUser } = useDeleteUser(onDeleteSuccess, onDeleteError);
+
+  const handleDeleteUser = () => {
+    setSnackbarConfig({ message: ""})
+    if (userIdToDelete !== null) {
+      deleteUser(userIdToDelete);
+      setIsConfirmationOpen(false);
+    }
+  };
+
+  const handleOpenConfirmationDialog = (userId: number) => {
+    setUserIdToDelete(userId);
+    setIsConfirmationOpen(true);
+  };
+
+  const handleCloseConfirmationDialog = () => {
+    setIsConfirmationOpen(false);
+    setUserIdToDelete(null);
+  };
+
+  /** Delete user END */
 
   const users: Array<User> = (data as AxiosResponse)?.data;
 
@@ -101,7 +150,11 @@ export default function UserListPage() {
                   >
                     <Edit />
                   </IconButton>
-                  <IconButton aria-label="delete" color="error">
+                  <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={() => handleOpenConfirmationDialog(row.id)}
+                  >
                     <Delete />
                   </IconButton>
                 </TableCell>
@@ -110,12 +163,22 @@ export default function UserListPage() {
           </TableBody>
         </Table>
       </TableContainer>
-      <AddUserModal
+      <UserModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleOnSubmit}
         user={selectedUser}
-      ></AddUserModal>
+      ></UserModal>
+      <ConfirmationDialog
+        isOpen={isConfirmationOpen}
+        title="Delete User"
+        description="Are you sure you want to delete this user?"
+        onConfirm={handleDeleteUser}
+        onCancel={handleCloseConfirmationDialog}
+      />
+      {snackbarConfig?.message && (
+        <CustomSnackbar message={snackbarConfig.message} severity={snackbarConfig.severity} />
+      )}
     </>
   );
 }

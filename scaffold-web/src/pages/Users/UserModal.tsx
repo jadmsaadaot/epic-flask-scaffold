@@ -28,7 +28,7 @@ const initFormData: Omit<User, "id"> = {
   description: ""
 };
 
-const AddUserModal: React.FC<AddUserModalProps> = ({
+const UserModal: React.FC<AddUserModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
@@ -51,8 +51,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     }
   }, [user]);
 
-  const onSuccess = (data: unknown) => {
-    console.log(data);
+  const onSuccess = () => {
     setFormData(initFormData);
     onSubmit();
   };
@@ -155,4 +154,4 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   );
 };
 
-export default AddUserModal;
+export default UserModal;

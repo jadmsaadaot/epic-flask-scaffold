@@ -18,6 +18,10 @@ const updateUser = (user: User) => {
   return request({ url: `/users/${user.id}`, method: "patch" , data: user});
 };
 
+const deleteUser = (id: number) => {
+  return request({ url: `/users/${id}`, method: "delete" });
+};
+
 export const useUsersData = () => {
   return useQuery({
     queryKey: ["users"],
@@ -44,6 +48,14 @@ export const useAddUser = (onSuccess: OnSuccessType, onError: OnErrorType) => {
 export const useUpdateUser = (onSuccess: OnSuccessType, onError: OnErrorType) => {
   return useMutation({
     mutationFn: updateUser,
+    onSuccess,
+    onError
+  })
+}
+
+export const useDeleteUser = (onSuccess: OnSuccessType, onError: OnErrorType) => {
+  return useMutation({
+    mutationFn: deleteUser,
     onSuccess,
     onError
   })
