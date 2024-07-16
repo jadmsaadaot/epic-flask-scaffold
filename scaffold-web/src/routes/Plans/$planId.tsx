@@ -7,6 +7,9 @@ import { Link, useParams } from "@tanstack/react-router";
 
 export const Route = createFileRoute('/plans/$planId')({
   component: PlanPage,
+  notFoundComponent: () => {
+    return <p>Plan not found!</p>
+  }
 })
 
 function PlanPage() {
