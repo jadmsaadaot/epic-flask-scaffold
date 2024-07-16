@@ -11,12 +11,13 @@
     "demo-server": "json-server --watch demoDB.json --port 5175"
   },
   "dependencies": {
-    "@bcgov/bc-sans": "^2.1.0",
+    "@bcgov/epic.theme": "^1.0.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.20",
     "@tanstack/react-query": "^5.45.1",
+    "@tanstack/react-router": "^1.45.2",
     "axios": "^1.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -26,7 +27,7 @@
     "@tanstack/eslint-plugin-query": "^5.43.1",
     "@tanstack/react-query-devtools": "^5.45.1",
     "@tanstack/router-devtools": "^1.39.4",
-    "@tanstack/router-vite-plugin": "^1.39.5",
+    "@tanstack/router-plugin": "^1.45.2",
     "@types/node": "^20.14.9",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

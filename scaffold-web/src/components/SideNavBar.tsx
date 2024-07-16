@@ -21,7 +21,7 @@ export default function SideNavBar() {
     },
     {
       routeName: "Plans",
-      path: "/planslist",
+      path: "/plans",
     },
   ];
 
