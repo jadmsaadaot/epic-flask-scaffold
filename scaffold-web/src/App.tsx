@@ -1,5 +1,5 @@
-import EAOAppBar from "@/components/EAOAppBar";
-import SideNavBar from "@/components/SideNavBar";
+import EAOAppBar from "@/components/Shared/EAOAppBar";
+import SideNavBar from "@/components/Shared/SideNavBar";
 import { Box } from "@mui/material";
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";

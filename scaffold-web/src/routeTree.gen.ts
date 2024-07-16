@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as PlansIndexImport } from './routes/plans/index'
 import { Route as PlansPlanIdImport } from './routes/plans/$planId'
 
@@ -32,6 +33,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const UsersIndexRoute = UsersIndexImport.update({
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const PlansIndexRoute = PlansIndexImport.update({
   path: '/plans/',
@@ -75,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlansIndexImport
       parentRoute: typeof rootRoute
     }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -85,6 +98,7 @@ export const routeTree = rootRoute.addChildren({
   AboutLazyRoute,
   PlansPlanIdRoute,
   PlansIndexRoute,
+  UsersIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -98,7 +112,8 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/about",
         "/plans/$planId",
-        "/plans/"
+        "/plans/",
+        "/users/"
       ]
     },
     "/": {
@@ -112,6 +127,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/plans/": {
       "filePath": "plans/index.tsx"
+    },
+    "/users/": {
+      "filePath": "users/index.tsx"
     }
   }
 }

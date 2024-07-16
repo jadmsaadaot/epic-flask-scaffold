@@ -6,7 +6,6 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from './routeTree.gen.ts'
 import { theme } from "@/styles/theme";
-import "@/styles/App.scss";
 
 
 // Create a new router instance
