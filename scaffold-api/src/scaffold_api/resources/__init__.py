@@ -33,11 +33,21 @@ __all__ = ('API_BLUEPRINT',)
 URL_PREFIX = '/api/'
 API_BLUEPRINT = Blueprint('API', __name__, url_prefix=URL_PREFIX)
 
+authorizations = {
+    'Bearer Auth': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'Authorization',
+        'description': 'Add "Bearer " before your token'
+    }
+}
+
 API = Api(
     API_BLUEPRINT,
     title='SCAFFOLD API',
     version='1.0',
-    description='The Core API for SCAFFOLD'
+    description='The Core API for SCAFFOLD',
+    authorizations=authorizations
 )
 
 # HANDLER = ExceptionHandler(API)

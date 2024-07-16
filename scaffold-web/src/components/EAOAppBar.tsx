@@ -16,7 +16,7 @@ export default function EAOAppBar() {
           <Grid display="flex" justifyContent="start" alignItems="center">
             <img src={EAO_Logo} height={72} />
             <Typography
-              variant="h4"
+              variant="h2"
               color="inherit"
               component="div"
               paddingLeft={"0.5rem"}
