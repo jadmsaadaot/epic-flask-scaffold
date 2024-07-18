@@ -1,9 +1,11 @@
-import { AppBar, Grid, Typography } from "@mui/material";
+import { AppBar, Box, Button, Grid, Typography } from "@mui/material";
 import EAO_Logo from "@/assets/images/EAO_Logo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { AppConfig } from "@/config";
+import { AppConfig } from "@/utils/config";
+import { useAuth } from "react-oidc-context";
 
 export default function EAOAppBar() {
+  const auth = useAuth();
   return (
     <>
       <AppBar position="static" color="inherit" elevation={2}>
@@ -25,16 +27,43 @@ export default function EAOAppBar() {
               {AppConfig.appTitle}
             </Typography>
           </Grid>
-          <Grid display="flex" justifyContent="center" alignItems="center">
-            <Typography
-              variant="body2"
-              color="inherit"
-              component="div"
-              paddingRight={"0.25rem"}
-            >
-              Sign In
-            </Typography>
-            <AccountCircleIcon fontSize="large"></AccountCircleIcon>
+          <Grid display="flex" justifyContent="center" alignItems="center" paddingRight={"0.75rem"}>
+            <AccountCircleIcon
+              fontSize="large"
+              color="primary"
+              sx={{ marginRight: "0.25rem" }}
+            ></AccountCircleIcon>
+            {auth.isAuthenticated ? (
+              <>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  marginRight={"0.75rem"}
+                >
+                  <Typography variant="body1" color="inherit">
+                    Hi, <b>{auth.user?.profile.name}</b>
+                  </Typography>
+                  <Typography variant="caption" color="inherit">
+                    {auth.user?.profile.email}
+                  </Typography>
+                </Box>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => auth.signoutRedirect()}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => auth.signinRedirect()}
+              >
+                Sign In
+              </Button>
+            )}
           </Grid>
         </Grid>
       </AppBar>

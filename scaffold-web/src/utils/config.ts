@@ -1,46 +1,42 @@
+import { AuthProviderProps } from "react-oidc-context";
+
 declare global {
   interface Window {
     _env_: {
       VITE_API_URL: string;
-
-      // Keycloak
-      VITE_KEYCLOAK_URL: string;
-      VITE_KEYCLOAK_CLIENT: string;
-      VITE_KEYCLOAK_REALM: string;
       VITE_ENV: string;
       VITE_VERSION: string;
       VITE_APP_TITLE: string;
+      VITE_APP_URL: string;
+      VITE_OIDC_AUTHORITY: string;
+      VITE_CLIENT_ID: string;
     };
   }
 }
 const API_URL =
   window._env_?.VITE_API_URL || import.meta.env.VITE_API_URL || "";
-
-// Keycloak Environment Variables
-const KC_URL =
-  window._env_?.VITE_KEYCLOAK_URL || import.meta.env.VITE_KEYCLOAK_URL;
-const KC_CLIENT =
-  window._env_?.VITE_KEYCLOAK_CLIENT ||
-  import.meta.env.VITE_KEYCLOAK_CLIENT;
-const KC_REALM =
-  window._env_?.VITE_KEYCLOAK_REALM ||
-  import.meta.env.VITE_KEYCLOAK_REALM;
 const APP_ENVIRONMENT =
   window._env_?.VITE_ENV || import.meta.env.VITE_ENV || "";
 const APP_VERSION =
   window._env_?.VITE_VERSION || import.meta.env.VITE_VERSION || "";
 const APP_TITLE =
   window._env_?.VITE_APP_TITLE || import.meta.env.VITE_APP_TITLE || "";
+const APP_URL = window._env_?.VITE_APP_URL || import.meta.env.VITE_APP_URL;
+const OIDC_AUTHORITY = window._env_?.VITE_OIDC_AUTHORITY || import.meta.env.VITE_OIDC_AUTHORITY;
+const CLIENT_ID = window._env_?.VITE_CLIENT_ID || import.meta.env.VITE_CLIENT_ID;
 
 export const AppConfig = {
-  // apiUrl: `${API_URL}/api/v1/`,
   apiUrl: `${API_URL}`,
   environment: APP_ENVIRONMENT,
   version: APP_VERSION,
   appTitle: APP_TITLE,
-  keycloak: {
-    url: KC_URL || "",
-    clientId: KC_CLIENT || "",
-    realm: KC_REALM || "",
-  },
+};
+
+export const OidcConfig: AuthProviderProps = {
+  authority: OIDC_AUTHORITY,
+  client_id: CLIENT_ID,
+  redirect_uri: `${APP_URL}/oidc-callback`,
+  post_logout_redirect_uri: `${APP_URL}/`,
+  scope: "openid profile email",
+  revokeTokensOnSignout: true,
 };

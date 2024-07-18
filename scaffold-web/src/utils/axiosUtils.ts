@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppConfig } from '@/config'
+import { AppConfig } from '@/utils/config'
 import axios, { AxiosError } from 'axios'
 
 export type OnErrorType = (error: AxiosError) => void;
