@@ -24,7 +24,7 @@ import CustomSnackbar, {
 } from "@/components/Shared/Popups/SnackBarMessage";
 import UserModal from "@/components/App/Users/UserModal";
 
-export const Route = createFileRoute("/users/")({
+export const Route = createFileRoute("/_authenticated/users/")({
   component: UsersPage,
 });
 

@@ -16,7 +16,7 @@ function OidcCallback() {
     return <h1>Error: {error.message}</h1>;
   }
 
-  if(isAuthenticated) {
+  if(!isLoading && isAuthenticated) {
     return <Navigate to="/"></Navigate>
   }
 }
