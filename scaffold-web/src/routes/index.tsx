@@ -1,7 +1,12 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { Button, Paper } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 
-export default function Home() {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const navigate = useNavigate();
   
   return (
@@ -17,7 +22,7 @@ export default function Home() {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => navigate("/planslist")}
+          onClick={() => navigate({to: "/eao-plans"})}
         >
           See Plans
         </Button>
@@ -25,3 +30,4 @@ export default function Home() {
     </>
   );
 }
+

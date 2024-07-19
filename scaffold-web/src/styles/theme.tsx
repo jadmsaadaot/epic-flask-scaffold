@@ -1,4 +1,4 @@
-// import "@bcgov/bc-sans/css/BC_Sans.css";
+import "@/styles/App.scss";
 import { createAppTheme } from 'epic.theme';
 
 // Any theme overrides should be passed into the createAppTheme.

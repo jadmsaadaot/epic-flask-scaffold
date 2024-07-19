@@ -1,3 +1,5 @@
+import { createFileRoute } from "@tanstack/react-router";
+
 import {
   Box,
   Button,
@@ -12,18 +14,21 @@ import {
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { AxiosError, AxiosResponse } from "axios";
-import { Link } from "react-router-dom";
 import { User } from "@/models/User";
 import { useDeleteUser, useUsersData } from "@/hooks/useUsers";
 import { useState } from "react";
-import UserModal from "./UserModal";
 import { useQueryClient } from "@tanstack/react-query";
-import ConfirmationDialog from "@/components/Popups/ConfirmationDialog";
+import ConfirmationDialog from "@/components/Shared/Popups/ConfirmationDialog";
 import CustomSnackbar, {
   SnackBarMessageProps,
-} from "@/components/Popups/SnackBarMessage";
+} from "@/components/Shared/Popups/SnackBarMessage";
+import UserModal from "@/components/App/Users/UserModal";
 
-export default function UserListPage() {
+export const Route = createFileRoute("/_authenticated/users/")({
+  component: UsersPage,
+});
+
+function UsersPage() {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -36,7 +41,7 @@ export default function UserListPage() {
 
   const handleOnSubmit = () => {
     queryClient.invalidateQueries({ queryKey: ["users"] });
-    if(selectedUser) {
+    if (selectedUser) {
       setSnackbarConfig({ message: "User updated successfully!" });
     } else {
       setSnackbarConfig({ message: "User added successfully!" });
@@ -63,15 +68,14 @@ export default function UserListPage() {
     });
   };
 
-  const onDeleteError = (error: AxiosError) => {
-    console.error(error);
-    setSnackbarConfig({ message: "User deletion failed!", severity: "error" });
+  const onDeleteError = (error: AxiosError) => {    
+    setSnackbarConfig({ message: `User deletion failed! ${error.message}`, severity: "error" });
   };
 
   const { mutate: deleteUser } = useDeleteUser(onDeleteSuccess, onDeleteError);
 
   const handleDeleteUser = () => {
-    setSnackbarConfig({ message: ""})
+    setSnackbarConfig({ message: "" });
     if (userIdToDelete !== null) {
       deleteUser(userIdToDelete);
       setIsConfirmationOpen(false);
@@ -136,9 +140,7 @@ export default function UserListPage() {
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  <Link to={`${row.id}`}>{row.first_name}</Link>
-                </TableCell>
+                <TableCell component="th" scope="row">{row.first_name}</TableCell>
                 <TableCell>{row.last_name}</TableCell>
                 <TableCell>{row.username}</TableCell>
                 <TableCell>{row.email_address}</TableCell>
@@ -177,7 +179,10 @@ export default function UserListPage() {
         onCancel={handleCloseConfirmationDialog}
       />
       {snackbarConfig?.message && (
-        <CustomSnackbar message={snackbarConfig.message} severity={snackbarConfig.severity} />
+        <CustomSnackbar
+          message={snackbarConfig.message}
+          severity={snackbarConfig.severity}
+        />
       )}
     </>
   );

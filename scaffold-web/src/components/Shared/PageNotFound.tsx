@@ -1,10 +1,7 @@
-import { Container, Paper } from "@mui/material";
-import { Link, useRouteError } from "react-router-dom";
+import { Paper, Container } from "@mui/material";
+import { Link } from "@tanstack/react-router";
 
 export default function PageNotFound() {
-  const error = useRouteError();
-  console.error(error);
-
   return (
     <Container id="Error404">
       <Paper
@@ -12,15 +9,12 @@ export default function PageNotFound() {
         sx={{
           padding: "1rem",
           marginTop: "2rem",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         <h1>404</h1>
         <p>Sorry, page not found.</p>
         <Link to={"/"}>Go Home</Link>
-        <p>
-          <i>{(error as Error).message}</i>
-        </p>
       </Paper>
     </Container>
   );

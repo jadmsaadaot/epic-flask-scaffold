@@ -57,6 +57,7 @@ const UserModal: React.FC<AddUserModalProps> = ({
   };
 
   const onError = (err: unknown) => {
+    // eslint-disable-next-line no-console
     console.log(err);
   };
 
