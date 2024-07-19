@@ -68,9 +68,8 @@ function UsersPage() {
     });
   };
 
-  const onDeleteError = (error: AxiosError) => {
-    console.error(error);
-    setSnackbarConfig({ message: "User deletion failed!", severity: "error" });
+  const onDeleteError = (error: AxiosError) => {    
+    setSnackbarConfig({ message: `User deletion failed! ${error.message}`, severity: "error" });
   };
 
   const { mutate: deleteUser } = useDeleteUser(onDeleteSuccess, onDeleteError);

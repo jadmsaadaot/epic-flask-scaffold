@@ -1,5 +1,3 @@
-import { AuthProviderProps } from "react-oidc-context";
-
 declare global {
   interface Window {
     _env_: {
@@ -32,7 +30,7 @@ export const AppConfig = {
   appTitle: APP_TITLE,
 };
 
-export const OidcConfig: AuthProviderProps = {
+export const OidcConfig = {
   authority: OIDC_AUTHORITY,
   client_id: CLIENT_ID,
   redirect_uri: `${APP_URL}/oidc-callback`,
