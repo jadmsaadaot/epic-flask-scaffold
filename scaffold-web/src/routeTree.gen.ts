@@ -15,8 +15,9 @@ import { Route as OidcCallbackImport } from './routes/oidc-callback'
 import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
-import { Route as PlansIndexImport } from './routes/plans/index'
-import { Route as PlansPlanIdImport } from './routes/plans/$planId'
+import { Route as EaoPlansIndexImport } from './routes/eao-plans/index'
+import { Route as EaoPlansPlanIdImport } from './routes/eao-plans/$planId'
+import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedUsersIndexImport } from './routes/_authenticated/users/index'
 
 // Create/Update Routes
@@ -41,14 +42,19 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PlansIndexRoute = PlansIndexImport.update({
-  path: '/plans/',
+const EaoPlansIndexRoute = EaoPlansIndexImport.update({
+  path: '/eao-plans/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const PlansPlanIdRoute = PlansPlanIdImport.update({
-  path: '/plans/$planId',
+const EaoPlansPlanIdRoute = EaoPlansPlanIdImport.update({
+  path: '/eao-plans/$planId',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexImport.update({
@@ -88,18 +94,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OidcCallbackImport
       parentRoute: typeof rootRoute
     }
-    '/plans/$planId': {
-      id: '/plans/$planId'
-      path: '/plans/$planId'
-      fullPath: '/plans/$planId'
-      preLoaderRoute: typeof PlansPlanIdImport
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/eao-plans/$planId': {
+      id: '/eao-plans/$planId'
+      path: '/eao-plans/$planId'
+      fullPath: '/eao-plans/$planId'
+      preLoaderRoute: typeof EaoPlansPlanIdImport
       parentRoute: typeof rootRoute
     }
-    '/plans/': {
-      id: '/plans/'
-      path: '/plans'
-      fullPath: '/plans'
-      preLoaderRoute: typeof PlansIndexImport
+    '/eao-plans/': {
+      id: '/eao-plans/'
+      path: '/eao-plans'
+      fullPath: '/eao-plans'
+      preLoaderRoute: typeof EaoPlansIndexImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated/users/': {
@@ -117,12 +130,13 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
+    AuthenticatedProfileRoute,
     AuthenticatedUsersIndexRoute,
   }),
   AboutRoute,
   OidcCallbackRoute,
-  PlansPlanIdRoute,
-  PlansIndexRoute,
+  EaoPlansPlanIdRoute,
+  EaoPlansIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -137,8 +151,8 @@ export const routeTree = rootRoute.addChildren({
         "/_authenticated",
         "/about",
         "/oidc-callback",
-        "/plans/$planId",
-        "/plans/"
+        "/eao-plans/$planId",
+        "/eao-plans/"
       ]
     },
     "/": {
@@ -147,6 +161,7 @@ export const routeTree = rootRoute.addChildren({
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/profile",
         "/_authenticated/users/"
       ]
     },
@@ -156,11 +171,15 @@ export const routeTree = rootRoute.addChildren({
     "/oidc-callback": {
       "filePath": "oidc-callback.tsx"
     },
-    "/plans/$planId": {
-      "filePath": "plans/$planId.tsx"
+    "/_authenticated/profile": {
+      "filePath": "_authenticated/profile.tsx",
+      "parent": "/_authenticated"
     },
-    "/plans/": {
-      "filePath": "plans/index.tsx"
+    "/eao-plans/$planId": {
+      "filePath": "eao-plans/$planId.tsx"
+    },
+    "/eao-plans/": {
+      "filePath": "eao-plans/index.tsx"
     },
     "/_authenticated/users/": {
       "filePath": "_authenticated/users/index.tsx",

@@ -2,10 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { usePlanById } from "@/hooks/usePlans";
 import { Plan } from "@/models/Plan";
 import { Box, Button, Chip } from "@mui/material";
-import { AxiosResponse } from "axios";
 import { Link, useParams } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/plans/$planId')({
+export const Route = createFileRoute('/eao-plans/$planId')({
   component: PlanPage,
   notFoundComponent: () => {
     return <p>Plan not found!</p>
@@ -18,7 +17,7 @@ function PlanPage() {
   const { status, data, isError, error, isFetching, isLoading } =
     usePlanById(planId);
 
-  const plan: Plan = (data as AxiosResponse)?.data;
+  const plan: Plan = (data as Plan);
 
   if (isLoading) {
     return <h2>Loading...</h2>;

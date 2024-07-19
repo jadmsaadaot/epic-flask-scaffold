@@ -10,18 +10,20 @@ import {
   TableRow,
 } from "@mui/material";
 import { usePlansData } from "@/hooks/usePlans";
-import { AxiosResponse } from "axios";
 import { Plan } from "@/models/Plan";
 import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/plans/")({
+export const Route = createFileRoute("/eao-plans/")({
   component: PlanListPage,
 });
 
 function PlanListPage() {
   const { isLoading, data, isError, error } = usePlansData();
 
-  const plans: Array<Plan> = (data as AxiosResponse)?.data;
+  // eslint-disable-next-line no-console
+  console.log(data);
+
+  const plans: Array<Plan> = data as Array<Plan>;
 
   if (isLoading) {
     return <h2>Loading...</h2>;

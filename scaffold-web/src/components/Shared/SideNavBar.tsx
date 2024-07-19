@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Box, List, ListItem, ListItemButton } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { theme } from "@/styles/theme";
+import { useAuth } from "react-oidc-context";
 
 export default function SideNavBar() {
+  const { isAuthenticated } = useAuth();
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-  const routes = [
+  let routeMenuItems = [
     {
       routeName: "Root",
       path: "/",
@@ -16,14 +18,25 @@ export default function SideNavBar() {
       path: "/about",
     },
     {
+      routeName: "Plans",
+      path: "/eao-plans",
+    },
+    {
       routeName: "Users",
       path: "/users",
     },
+  ];
+
+  const authenticatedRouteMenuItems = [
     {
-      routeName: "Plans",
-      path: "/plans",
+      routeName: "Profile",
+      path: "/profile",
     },
   ];
+
+  if(isAuthenticated) {
+    routeMenuItems = routeMenuItems.concat(authenticatedRouteMenuItems);
+  }
 
   return (
     <div>
@@ -33,7 +46,7 @@ export default function SideNavBar() {
         height={"calc(100vh - 88px)"}
       >
         <List>
-          {routes.map((route) => (
+          {routeMenuItems.map((route) => (
             <ListItem key={route.routeName}>
               <Link
                 to={route.path}
