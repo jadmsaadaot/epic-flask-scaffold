@@ -71,6 +71,10 @@ docker-compose up
 Navigate to your project directory and run the setup command to prepare your development environment:
 make setup
 
+### 5. Run Server
+Once the setup is completed use make run to start the server:
+make run
+
 ## Front End Setup
 
 ### 1. Navigate to Front End Directory
