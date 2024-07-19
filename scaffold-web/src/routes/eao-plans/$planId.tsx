@@ -46,7 +46,7 @@ function PlanPage() {
             <p>On {plan.submittedDate}</p>
           </div>
           <div>{isFetching ? "Background Updating..." : " "}</div>
-          <Link to={"/plans"}>
+          <Link to={"/eao-plans"}>
             <Button variant="outlined" color="primary">
               Go Back
             </Button>

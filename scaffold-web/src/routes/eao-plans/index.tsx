@@ -12,6 +12,7 @@ import {
 import { usePlansData } from "@/hooks/usePlans";
 import { Plan } from "@/models/Plan";
 import { Link } from "@tanstack/react-router";
+import { OpenInNew } from "@mui/icons-material";
 
 export const Route = createFileRoute("/eao-plans/")({
   component: PlanListPage,
@@ -19,9 +20,6 @@ export const Route = createFileRoute("/eao-plans/")({
 
 function PlanListPage() {
   const { isLoading, data, isError, error } = usePlansData();
-
-  // eslint-disable-next-line no-console
-  console.log(data);
 
   const plans: Array<Plan> = data as Array<Plan>;
 
@@ -53,11 +51,12 @@ function PlanListPage() {
               >
                 <TableCell component="th" scope="row">
                   <Link
-                    to={`/plans/$planId`}
+                    to={"/eao-plans/$planId"}
                     params={{ planId: `${row.id}` }}
                   >
                     {row.name}
                   </Link>
+                  <OpenInNew fontSize={"small"} sx={{ pl: ".25rem" }} />
                 </TableCell>
                 <TableCell align="right">{row.submittedDate}</TableCell>
                 <TableCell align="right">{row.submittedBy}</TableCell>

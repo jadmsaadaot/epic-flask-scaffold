@@ -51,15 +51,16 @@ export default function SideNavBar() {
               <Link
                 to={route.path}
                 onClick={() => setCurrentPath(route.path)}
-                style={{
+                activeProps={{style: {
                   color: theme.palette.primary.main,
                   fontWeight: currentPath === route.path ? "bold" : "normal",
                   textDecoration: "none",
                   width: "100%",
-                }}
+                }}}
               >
                 <ListItemButton
                   sx={{
+                    pl: "2rem",
                     backgroundColor:
                       currentPath === route.path
                         ? "rgba(0, 0, 0, 0.1)"
