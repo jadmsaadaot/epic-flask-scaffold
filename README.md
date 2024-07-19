@@ -12,56 +12,7 @@ Add the following line to your `.bashrc` or `.zshrc` file to set the `PYTHONPATH
 export PYTHONPATH="/path/to/scaffold-api:${PYTHONPATH}"
 
 ### 3. Configure Environment Variables
-Create a `.env` file in your scaffold-api with the necessary configurations. Replace placeholder values with actual secret keys where appropriate:
-```
-FLASK_ENV=development
-FLASK_APP=wsgi.py
-
-# Local DB variables
-DATABASE_USERNAME=scaffold
-DATABASE_PASSWORD=scaffold
-DATABASE_NAME=scaffold
-DATABASE_HOST=localhost
-DATABASE_PORT=54332
-
-DATABASE_TEST_USERNAME=scaffold
-DATABASE_TEST_PASSWORD=scaffold
-DATABASE_TEST_NAME=scaffold
-DATABASE_TEST_HOST=localhost
-DATABASE_TEST_PORT=5432
-
-# JWT OIDC Configuration
-JWT_OIDC_TEST_ISSUER="http://localhost:8081/auth/realms/demo"
-JWT_OIDC_TEST_WELL_KNOWN_CONFIG="http://localhost:8081/auth/realms/demo/.well-known/openid-configuration"
-JWT_OIDC_TEST_ALGORITHMS="RS256"
-JWT_OIDC_TEST_AUDIENCE="scaffold-web"
-JWT_OIDC_TEST_CLIENT_SECRET="sample-client-secret"
-JWT_OIDC_TEST_JWKS_CACHE_TIMEOUT="6000"
-
-JWT_OIDC_WELL_KNOWN_CONFIG="https://localhost:8080/auth/realms/scaffold/.well-known/openid-configuration"
-JWT_OIDC_AUDIENCE="account"
-JWT_OIDC_ISSUER="https://localhost:8080/auth/realms/scaffold"
-JWT_OIDC_ALGORITHMS="RS256"
-JWT_OIDC_JWKS_URI="https://localhost:8080/auth/realms/scaffold/protocol/openid-connect/certs"
-JWT_OIDC_CACHING_ENABLED=True
-JWT_OIDC_JWKS_CACHE_TIMEOUT=3000000
-
-SITE_URL="http://localhost:3000"
-KEYCLOAK_BASE_URL="https://localhost:8080"
-KEYCLOAK_URL_REALM="scaffold"
-
-SCAFFOLD_ADMIN_CLIENT_ID="scaffold-admin"
-SCAFFOLD_ADMIN_CLIENT_SECRET="sample-admin-client-secret"
-
-CORS_ORIGIN="http://192.168.0.145:8000,http://192.168.0.145:3000,http://localhost:8000,http://localhost:3000,http://localhost:5000"
-
-S3_BUCKET="sample-bucket-name"
-S3_ACCESS_KEY_ID="scaffold-admin"
-S3_SECRET_ACCESS_KEY="sample-s3-secret"
-S3_HOST=""
-S3_REGION=""
-S3_SERVICE=""
-```
+Create a `.env` file in your scaffold-api with the necessary configurations. Reference sample.env to see what variables you need to configure
 
 ### 4. Start Docker Compose
 In a separate terminal, launch Docker Compose to set up your containers:
@@ -74,6 +25,10 @@ make setup
 ### 5. Run Server
 Once the setup is completed use make run to start the server:
 make run
+
+
+## Backend Setup on Windows
+
 
 ## Front End Setup
 
