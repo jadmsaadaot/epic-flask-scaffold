@@ -18,6 +18,10 @@ export default function SideNavBar() {
       path: "/about",
     },
     {
+      routeName: "Lazy Loaded Page",
+      path: "/newpage",
+    },
+    {
       routeName: "Plans",
       path: "/eao-plans",
     },
