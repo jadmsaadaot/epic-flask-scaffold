@@ -87,3 +87,155 @@ npm install
 Launch the development server:
 npm run dev
 
+# Helm
+In openshift, you should have namespaces as such:
+xxxx-tools
+xxxx-dev
+xxxx-test
+xxxx-prod
+
+After the oc login which can be gotten from the openshift command line tool page
+install command https://helm.sh/docs/helm/helm_install/
+
+## Patroni
+You can reuse a patroni chart like https://github.com/bcgov/nr-patroni-chart
+follow instructions on the link
+
+- if the resource quota was exceeded you can change the values in values.yaml, you can always do that locally and install like this as well `$ helm install -f myvalues.yaml myredis ./redis`
+
+## API
+
+can reuse the charts here https://github.com/bcgov/EPIC.submit/tree/develop/deployment/charts the api and the api-bc
+
+### *api.yml
+Install it in the xxxx-dev with name xxx-api. Upon success you will have the DeploymentConfig, Route, Service, Secrets and ConfigMap
+
+### *bc.yml
+Install it in a xxxx-tools with bane yourApp-api. Upon success you will have BuildConfig and ImageStream.
+
+The ImageStream is used to host the docker image in openshift registry and point to different build tags: latest, dev, etc.
+
+The Deployment config will reference these builds using the tags
+
+The BuildConfig is run to manually build a docker image and push it to the openshift registry
+
+### Role Binding
+You need to give the service account "default" image pulling permissions. Create an image pulling role and bind it to the default service account
+
+### Network Policy
+
+The tools namespace will be common to dev, test and prod and you will need to allow for connections between namespaces via Network policy:
+
+You need a policy to allow pods in xxxx-dev to connect with each other
+    spec:
+    
+    podSelector: {}
+    
+    ingress:
+    
+    - from:
+    
+    - namespaceSelector:
+    
+    matchLabels:
+    
+    environment: dev
+    
+    name: c8b80a
+    
+    policyTypes:
+    
+    - Ingress
+
+
+# Github Workflows
+you can find a working example here: https://github.com/bcgov/EPIC.scaffold/tree/main/.github/workflows
+
+- create a github-action service account openshift in the tools namespace and bind to it image puller and image pusher roles
+- Add the following secrets in the repo settings under repository secrets: OPENSHIFT_IMAGE_REGISTRY (the public image repository, ignore the path just the base  url), OPENSHIFT_LOGIN_REGISTRY (you can pull this from the same place you get your oc login command, OPENSHIFT_REPOSITORY, OPENSHIFT_SA_NAME (github_action), OPENSHIFT_SA_TOKEN(github-action token, find it in secrets)
+
+# Codecov
+if you intend to use codecov in your CI workflows, you have to go to the bcgov codecov account and register your app there, get a token and add it as a repo secret with name CODECOV_TOKEN
+
+### JEST
+example work yml for jest:
+
+  testing:
+    needs: setup-job
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+    
+      - name: Install dependencies
+        run: |
+          npm install --legacy-peer-deps
+        env:
+          FONTAWESOME_PACKAGE_TOKEN: ${{ secrets.FONTAWESOME_PACKAGE_TOKEN }}
+    
+      - name: Test with jest
+        id: test
+        run: |
+          npm test -- --coverage
+    
+      # Set codecov branch name with prefix if pull request
+      - name: Sets Codecov branch name
+        run: |
+          echo "CODECOV_BRANCH=PR_${{github.head_ref}}" >> $GITHUB_ENV
+        if: github.event_name == 'pull_request'
+    
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: app-web
+          name: codecov-app-web
+          fail_ci_if_error: true
+          verbose: true
+          override_branch: ${{env.CODECOV_BRANCH}}
+          token: ${{ secrets.CODECOV_TOKEN }}
+### Cypress
+you have to add a some dev dependencies and set them up in the app and then you can use the below example yml for cypress:
+
+      testing:
+        needs: setup-job
+        runs-on: ubuntu-20.04
+    
+        steps:
+          - uses: actions/checkout@v2
+    
+          - name: Use Node.js ${{ matrix.node-version }}
+            uses: actions/setup-node@v1
+            with:
+              node-version: ${{ matrix.node-version }}
+    
+          - name: Install dependencies
+            run: |
+              npm install --legacy-peer-deps
+    
+          - name: Test with Cypress
+            id: test
+            run: |
+              npx cypress run --component --headed --browser chrome
+    
+          - name: Sets Codecov branch name
+            run: |
+              echo "CODECOV_BRANCH=PR_${{ github.head_ref }}" >> $GITHUB_ENV
+            if: github.event_name == 'pull_request'
+    
+          - name: Upload coverage to Codecov
+            uses: codecov/codecov-action@v4
+            with:
+              flags: app-web
+              name: codecov-app-web
+              fail_ci_if_error: true
+              verbose: true
+              override_branch: ${{ env.CODECOV_BRANCH }}
+              token: ${{ secrets.CODECOV_TOKEN }}
+              directory: ./app-web/coverage
+
+
